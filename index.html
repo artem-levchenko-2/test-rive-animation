@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="style.css">
   <!-- Google Fonts (Inter) -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@rive-app/webgl@2.26.7"></script>
 </head>
 <body>
   <section class="hero">
@@ -29,6 +30,36 @@
       <img src="dashboard-screenshot.png" alt="Transactions Dashboard">
     </div>
   </section>
+  <script>
+  // 1. Ініціалізуємо Rive
+  const riveInstance = new rive.Rive({
+    src: 'button.riv',
+    canvas: document.getElementById('riveCanvas'),
+    autoplay: false,               // керуватимемо вручну
+    stateMachines: ['ButtonSM'],   // ваша State Machine
+  });
+
+  // 2. Знаходимо кнопку
+  const btn = document.querySelector('.rive-button');
+
+  // 3. Встановлюємо hover-логіку
+  btn.addEventListener('mouseenter', () => {
+    riveInstance.inputs[0].value = true;  // припускаємо, що це isHover
+  });
+  btn.addEventListener('mouseleave', () => {
+    riveInstance.inputs[0].value = false;
+  });
+
+  // 4. Обробляємо click
+  btn.addEventListener('click', () => {
+    console.log('Кнопка натиснута!');
+    // тут ваша логіка, наприклад, відкриття модалки
+  });
+
+  // 5. Для старту анімації (Idle стан)
+  riveInstance.play(); // або riveInstance.start();
+</script>
+
 </body>
 </html>
 
