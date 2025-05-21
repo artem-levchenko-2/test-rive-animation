@@ -1,9 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="uk">
 <head>
-<title>Hello, World!</title>
+  <meta charset="UTF-8">
+  <title>Rive Demo</title>
+  <script src="https://unpkg.com/@rive-app/canvas@2.8.3"></script>
 </head>
 <body>
-<h1>Hello, World!</h1>
+  <canvas id="rive-canvas" width="500" height="500"></canvas>
+  <canvas id="rive-canvas-2" width="500" height="500"></canvas>
+<script>
+  let riveInstance;
+
+  new rive.Rive({
+    src: "keyboard_for_weather.riv",
+    canvas: document.getElementById("rive-canvas"),
+    stateMachines: ["State Machine 1"], // обов'язково!
+    autoplay: true,
+    onLoad: function () {
+      riveInstance = this;
+    }
+  });
+
+  document.getElementById("rive-canvas").addEventListener("click", () => {
+    const inputs = riveInstance.stateMachineInputs("State Machine 1");
+    const clickTrigger = inputs.find(input => input.name === "Click"); // або інша назва твого Trigger
+
+    if (clickTrigger && clickTrigger.fire) {
+      clickTrigger.fire();
+    }
+  });
+</script>
+ <script>
+    new rive.Rive({
+      src: "animation.riv",
+      canvas: document.getElementById("rive-canvas-2"),
+      autoplay: true,
+    });
+  </script>
+
+  </script>
 </body>
 </html>
